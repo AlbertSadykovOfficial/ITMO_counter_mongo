@@ -1,8 +1,8 @@
 version: "3"
 services:
-  university-mongo:
+  university-mongo-swarm:
     image: mongo:4.0.8
-    container_name: university-mongo
+    container_name: university-mongo-swarm
     restart: always # unless-stopped
     command: mongod --auth
     environment:
@@ -13,16 +13,15 @@ services:
       MONDODB_LOG_DIR: ${MONDODB_LOG_DIR}
     ports:
       - "27017:27017"
-    volumes:
-      - mongouniversitydbdata:${MONGODB_DATA_DIR}
-  university-web:
+  university-web-swarm:
+    image: 127.0.0.1:10000/test_swarm-app
     build: .
-    container_name: university-web
     ports:
-      - "5000:5000"
+      - "8000:5000"
     volumes:
       - ./app:/app
     environment:
       FLASK_ENV: development
-volumes:
-  mongouniversitydbdata:
+    deploy:
+      mode: replicated
+      replicas: 4

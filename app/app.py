@@ -3,7 +3,7 @@ from datetime import datetime
 
 from flask import Flask
 
-connection = mongo.connect('university-mongo', 27017, 'mongodbuser', 'your_mongodb_root_password')
+connection = mongo.connect('university-mongo-swarm', 27017, 'mongodbuser', 'your_mongodb_root_password')
 database = mongo.use(connection, '1')
 collection = mongo.pick_collection(database, '1')
   
